@@ -7,7 +7,12 @@ public class Var_elim {
         Factor result = null;
         ArrayList<Character> partial = new ArrayList<>(factor.getVariables());
         partial.remove(variable);
-        if(factor.factorSize()==2){
+        float t, f;
+        t = value ? 1 : 0;
+        f = value ? 0 : 1;
+        if(factor.factorSize()==1){
+            result = this.new1Factor(factor.getVariables(),new ArrayList<>(Arrays.asList(t,f)));
+        } else if(factor.factorSize()==2){
             result = this.new1Factor(partial,factor.getVarValues(variable,value));
         } else if (factor.factorSize()==3){
             result = this.new2Factor(partial,factor.getVarValues(variable,value));

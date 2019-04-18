@@ -21,32 +21,27 @@ public class Bayes {
         Factor FB = ve.new2Factor(B,fb);
         Factor NSV = ve.new3Factor(V,nsv);
         Factor MW = ve.new4Factor(W,mw);
-//        System.out.println(NSV);
-//        System.out.println();
-//        System.out.println(NSV.containsVar((Character)'m'));
-//        System.out.println(NSV.getVarValues((Character)'m',true));
-//        System.out.println(MS);
-//        System.out.println();
-//        System.out.println(FB);
-//        System.out.println();
-//        Factor f = ve.sumOut(ve.multiple(NSV,NA),'a');
-//        System.out.println(f);
-//        f = ve.multiple(f,FM);
-//        System.out.println();
-//        System.out.println(f);
-//        f = ve.sumOut(ve.multiple(f,MW), 'm');
-//        System.out.println();
-//        System.out.println(f);
-//        Factor g = ve.multiple(MS,FB);
-//        System.out.println();
-//        System.out.println(g);
-//        f = ve.multiple(g,f);
-//        System.out.println();
-//        System.out.println(f);
-//        System.out.println(ve.multiple(MW,f));
-        System.out.println(ve.inference(Arrays.asList(FM,NA,MS,FB,NSV,MW),'s',Arrays.asList('a','m','s','b','v'),new HashMap<>()));
-//        System.out.println();
-//        System.out.println(NSV);
-//        System.out.println("hi");
+        HashMap<Character,Boolean> given = new HashMap<>();
+        Factor splash = ve.inference(Arrays.asList(FM,NA,MS,NSV,MW),'w',Arrays.asList('a','m','s','v'),given);
+//        given.put('w',true);
+        given.put('m',true);
+        System.out.println(splash.getVarValues('w',true));
+        System.out.println();
+//        System.out.println(ve.restrict(FM,'m',true));d
+        Factor splashWMoon = ve.inference(Arrays.asList(NA,MS,NSV,MW),'w',Arrays.asList('a','s','v'),given);
+        System.out.println(splashWMoon);
+        float wGivenM = splashWMoon.getVarValues('w',true).get(0);
+        System.out.println(MS);
+        float s = MS.getVarValues('s',true).get(0);
+        given.put('s',true);
+        Factor splashIfSick = ve.inference(Arrays.asList(NA,NSV,MW),'w',Arrays.asList('a','v'),given);
+        System.out.println(splashIfSick);
+        float wGivenS = splashIfSick.getVarValues('w',true).get(0);
+        float sGivenW = (wGivenS*s)/wGivenM;
+        System.out.println(sGivenW);
+        System.out.println();
+
+
+//        System.out.println(ve.inference(Arrays.asList(FM,NA,MS,FB,NSV,MW),'s',Arrays.asList('a','m','s','b','v'),given));
     }
 }

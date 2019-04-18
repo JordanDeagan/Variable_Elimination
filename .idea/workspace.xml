@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ac74f722-7c16-4d36-993c-ea9af15f3f2f" name="Default Changelist" comment="" />
+    <list default="true" id="ac74f722-7c16-4d36-993c-ea9af15f3f2f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Var_elimination/Bayes.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Var_elimination/Bayes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Var_elimination/Var_elim.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Var_elimination/Var_elim.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bayes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bayes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Var_elim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Var_elim.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Bayes.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="52" selection-start-line="52" selection-end-line="52" />
+            <state relative-caret-position="293">
+              <caret line="41" column="29" lean-forward="true" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -78,35 +84,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FactorFour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2790">
-              <caret line="271" column="45" selection-start-line="271" selection-start-column="45" selection-end-line="271" selection-end-column="45" />
+            <state relative-caret-position="315">
+              <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#748#749#0" expanded="true" />
-                <element signature="e#772#773#0" expanded="true" />
-                <element signature="e#835#836#0" expanded="true" />
-                <element signature="e#880#881#0" expanded="true" />
+                <element signature="method#FactorFour#0;class#FactorFour#0" />
+                <element signature="method#getVarValues#0;class#FactorFour#0" />
                 <element signature="method#get3VarVals#0;class#FactorFour#0" />
-                <element signature="e#11766#11767#0" expanded="true" />
-                <element signature="e#11800#11801#0" expanded="true" />
-                <element signature="e#11859#11860#0" expanded="true" />
-                <element signature="e#11890#11891#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Var_elim.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="473" column="52" lean-forward="true" selection-start-line="473" selection-start-column="52" selection-end-line="473" selection-end-column="52" />
+            <state relative-caret-position="1875">
+              <caret line="502" selection-start-line="502" selection-end-line="502" />
               <folding>
-                <element signature="method#restrict#0;class#Var_elim#0" />
                 <element signature="method#multiple#0;class#Var_elim#0" />
-                <element signature="method#sumOut#0;class#Var_elim#0" />
-                <element signature="method#inference#0;class#Var_elim#0" />
-                <element signature="method#multiplyAndSum#0;class#Var_elim#0" />
                 <element signature="method#normalize#0;class#Var_elim#0" />
                 <element signature="method#new1Factor#0;class#Var_elim#0" />
                 <element signature="method#new2Factor#0;class#Var_elim#0" />
@@ -130,6 +126,9 @@
       <find>List</find>
       <find>char</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -155,7 +154,31 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Variable_Elimination" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Variable_Elimination" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Variable_Elimination" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Variable_Elimination" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Variable_Elimination" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Variable_Elimination" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -201,13 +224,21 @@
       <option name="presentableId" value="Default" />
       <updated>1554762006023</updated>
     </task>
+    <task id="LOCAL-00001" summary="Adding current progress">
+      <created>1555436195898</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1555436195898</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.16666667" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.16839585" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -216,7 +247,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31655845" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3159609" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -235,6 +266,11 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adding current progress" />
+    <MESSAGE value="Finished up to 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished up to 3" />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main.java" />
     <entry file="jrt:///usr/lib/jvm/java-1.11.0-openjdk-amd64!/java.base/java/util/ArrayList.class">
@@ -246,8 +282,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Bayes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="52" selection-start-line="52" selection-end-line="52" />
+        <state relative-caret-position="293">
+          <caret line="41" column="29" lean-forward="true" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -297,33 +333,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FactorFour.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2790">
-          <caret line="271" column="45" selection-start-line="271" selection-start-column="45" selection-end-line="271" selection-end-column="45" />
+        <state relative-caret-position="315">
+          <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#748#749#0" expanded="true" />
-            <element signature="e#772#773#0" expanded="true" />
-            <element signature="e#835#836#0" expanded="true" />
-            <element signature="e#880#881#0" expanded="true" />
+            <element signature="method#FactorFour#0;class#FactorFour#0" />
+            <element signature="method#getVarValues#0;class#FactorFour#0" />
             <element signature="method#get3VarVals#0;class#FactorFour#0" />
-            <element signature="e#11766#11767#0" expanded="true" />
-            <element signature="e#11800#11801#0" expanded="true" />
-            <element signature="e#11859#11860#0" expanded="true" />
-            <element signature="e#11890#11891#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Var_elim.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="473" column="52" lean-forward="true" selection-start-line="473" selection-start-column="52" selection-end-line="473" selection-end-column="52" />
+        <state relative-caret-position="1875">
+          <caret line="502" selection-start-line="502" selection-end-line="502" />
           <folding>
-            <element signature="method#restrict#0;class#Var_elim#0" />
             <element signature="method#multiple#0;class#Var_elim#0" />
-            <element signature="method#sumOut#0;class#Var_elim#0" />
-            <element signature="method#inference#0;class#Var_elim#0" />
-            <element signature="method#multiplyAndSum#0;class#Var_elim#0" />
             <element signature="method#normalize#0;class#Var_elim#0" />
             <element signature="method#new1Factor#0;class#Var_elim#0" />
             <element signature="method#new2Factor#0;class#Var_elim#0" />
