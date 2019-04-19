@@ -25,23 +25,42 @@ public class Bayes {
         Factor splash = ve.inference(Arrays.asList(FM,NA,MS,NSV,MW),'w',Arrays.asList('a','m','s','v'),given);
 //        given.put('w',true);
         given.put('m',true);
-        System.out.println(splash.getVarValues('w',true));
+        System.out.println(splash.getVarValues('w',true).get(0));
         System.out.println();
 //        System.out.println(ve.restrict(FM,'m',true));d
         Factor splashWMoon = ve.inference(Arrays.asList(NA,MS,NSV,MW),'w',Arrays.asList('a','s','v'),given);
-        System.out.println(splashWMoon);
+//        System.out.println(splashWMoon);
         float wGivenM = splashWMoon.getVarValues('w',true).get(0);
-        System.out.println(MS);
+//        System.out.println(MS);
         float s = MS.getVarValues('s',true).get(0);
         given.put('s',true);
         Factor splashIfSick = ve.inference(Arrays.asList(NA,NSV,MW),'w',Arrays.asList('a','v'),given);
-        System.out.println(splashIfSick);
+//        System.out.println(splashIfSick);
         float wGivenS = splashIfSick.getVarValues('w',true).get(0);
         float sGivenW = (wGivenS*s)/wGivenM;
         System.out.println(sGivenW);
         System.out.println();
 
+        HashMap<Character,Boolean> given2 = new HashMap<>();
+        Factor bowl = ve.inference(Arrays.asList(FB,MS),'b',Arrays.asList('s'),given2);
+        given2.put('s',true);
+        Factor bowlGivenSick = ve.inference(Arrays.asList(FB),'b',Arrays.asList(),given2);
+        float b = bowl.getVarValues('b',true).get(0);
+        float bGivenS = bowlGivenSick.getVarValues('b',true).get(0);
+        float sGivenB = (bGivenS*s)/b;
+        float sGivenBW = (bGivenS*s*wGivenS)/(b*wGivenM);
+//        float sGivenBW2 = (bGivenS*s*wGivenM)/(b*wGivenM);
+        System.out.println(sGivenBW);
+//        System.out.println(sGivenBW2);
+        System.out.println();
 
-//        System.out.println(ve.inference(Arrays.asList(FM,NA,MS,FB,NSV,MW),'s',Arrays.asList('a','m','s','b','v'),given));
+        given.put('a',true);
+        Factor splashIfSick2 = ve.inference(Arrays.asList(NSV,MW),'w',Arrays.asList('v'),given);
+        given.remove('s');
+        Factor splashWAway = ve.inference(Arrays.asList(MS,NSV,MW),'w',Arrays.asList('s','v'),given);
+        float wGivenS2 = splashIfSick2.getVarValues('w',true).get(0);
+        float wGivenA = splashWAway.getVarValues('w',true).get(0);
+        float sGivenBW2 = (bGivenS*s*wGivenS2)/(b*wGivenA);
+        System.out.println(sGivenBW2);
     }
 }
