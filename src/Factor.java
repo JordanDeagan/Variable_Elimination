@@ -7,9 +7,11 @@ public interface Factor {
 
     boolean containsVar(Character var);
 
-    List<Float> getVarValues(Character val, boolean value);
+    List<Float> getVarValues(Character val, int value);
 
     List<Float> getAllValues();
 
     List<Character> getVariables();
+
+    int getSize();
 }

@@ -5,12 +5,14 @@ public class FactorOne implements Factor{
     private List<Character> variables;
     private List<Float> tableValues;
     private Float[] table;
-    FactorOne(List<Character> vars, List<Float> values){
-        table = new Float[2];
+    private int size;
+    FactorOne(List<Character> vars, List<Float> values, int numOptions){
+        table = new Float[numOptions];
         tableValues = values;
         variables = vars;
+        size = numOptions;
         int val = 0;
-        for (int f = 0;f<2;f++){
+        for (int f = 0;f<numOptions;f++){
             table[f] = values.get(val);
             val++;
         }
@@ -27,14 +29,10 @@ public class FactorOne implements Factor{
     }
 
     @Override
-    public List<Float> getVarValues(Character val, boolean value){
+    public List<Float> getVarValues(Character val, int value){
         if(this.containsVar(val)){
             ArrayList<Float> vals = new ArrayList<>();
-            if (value){
-                vals.add(table[0]);
-            } else {
-                vals.add(table[1]);
-            }
+            vals.add(table[value]);
             return vals;
         }
         return null;
@@ -51,9 +49,14 @@ public class FactorOne implements Factor{
     }
 
     @Override
-    public String toString() {
-        char a = variables.get(0);
-        String out = a + " = " + table[0] + "\n~" + a + " = " + table[1];
-        return out;
+    public int getSize() {
+        return size;
     }
+
+//    @Override
+//    public String toString() {
+//        char a = variables.get(0);
+//        String out = a + " = " + table[0] + "\n~" + a + " = " + table[1];
+//        return out;
+//    }
 }

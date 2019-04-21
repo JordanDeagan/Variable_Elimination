@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="ac74f722-7c16-4d36-993c-ea9af15f3f2f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Var_elimination/Bayes.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Var_elimination/Bayes.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Bayes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bayes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Factor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Factor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FactorFour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FactorFour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FactorOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FactorOne.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FactorThree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FactorThree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FactorTwo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FactorTwo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Var_elim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Var_elim.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +26,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Bayes.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="27" column="63" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
+            <state relative-caret-position="90">
+              <caret line="29" column="45" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -30,8 +35,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Factor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+            <state relative-caret-position="225">
+              <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -42,11 +47,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FactorOne.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+            <state relative-caret-position="600">
+              <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#getVarValues#0;class#FactorOne#0" />
               </folding>
             </state>
           </provider>
@@ -55,12 +59,14 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FactorTwo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="31" column="45" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
+            <state relative-caret-position="810">
+              <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#getVarValues#0;class#FactorTwo#0" />
-                <element signature="method#toString#0;class#FactorTwo#0" />
+                <element signature="e#1394#1395#0" expanded="true" />
+                <element signature="e#1428#1429#0" expanded="true" />
+                <element signature="e#1487#1488#0" expanded="true" />
+                <element signature="e#1518#1519#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,11 +75,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FactorThree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1350">
-              <caret line="111" column="5" selection-start-line="97" selection-start-column="4" selection-end-line="111" selection-end-column="5" />
+            <state relative-caret-position="90">
+              <caret line="8" column="73" lean-forward="true" selection-start-line="8" selection-start-column="73" selection-end-line="8" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#toString#0;class#FactorThree#0" />
+                <element signature="method#get2VarVals#0;class#FactorThree#0" />
+                <element signature="e#3341#3342#0" expanded="true" />
+                <element signature="e#3375#3376#0" expanded="true" />
+                <element signature="e#3434#3435#0" expanded="true" />
+                <element signature="e#3465#3466#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,13 +92,14 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FactorFour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+            <state relative-caret-position="105">
+              <caret line="9" column="72" lean-forward="true" selection-start-line="9" selection-start-column="72" selection-end-line="9" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#FactorFour#0;class#FactorFour#0" />
                 <element signature="method#getVarValues#0;class#FactorFour#0" />
+                <element signature="method#get2VarVals#0;class#FactorFour#0" />
                 <element signature="method#get3VarVals#0;class#FactorFour#0" />
+                <marker date="1555706945630" expanded="true" signature="12266:13904" ph="..." />
               </folding>
             </state>
           </provider>
@@ -97,14 +108,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Var_elim.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1875">
-              <caret line="502" selection-start-line="502" selection-end-line="502" />
+            <state relative-caret-position="232">
+              <caret line="76" column="50" selection-start-line="76" selection-start-column="50" selection-end-line="76" selection-end-column="50" />
               <folding>
-                <element signature="method#multiple#0;class#Var_elim#0" />
+                <element signature="method#restrict#0;class#Var_elim#0" />
+                <element signature="e#2033#2554#1" />
+                <element signature="e#4856#15653#1" />
+                <element signature="e#6785#10609#1" />
+                <element signature="e#8274#15643#1" />
+                <element signature="e#11014#15629#1" />
+                <element signature="method#sumOut#0;class#Var_elim#0" />
                 <element signature="method#normalize#0;class#Var_elim#0" />
-                <element signature="method#new1Factor#0;class#Var_elim#0" />
-                <element signature="method#new2Factor#0;class#Var_elim#0" />
-                <element signature="method#new3Factor#0;class#Var_elim#0" />
+                <element signature="n#!!doc;n#new1Factor#0;n#Var_elim#0" />
+                <element signature="n#!!doc;n#new2Factor#0;n#Var_elim#0" />
+                <element signature="n#!!doc;n#new3Factor#0;n#Var_elim#0" />
               </folding>
             </state>
           </provider>
@@ -123,6 +140,8 @@
     <findStrings>
       <find>List</find>
       <find>char</find>
+      <find>retu</find>
+      <find>^</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -131,13 +150,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/FactorThree.java" />
-        <option value="$PROJECT_DIR$/src/Factor.java" />
-        <option value="$PROJECT_DIR$/src/FactorTwo.java" />
         <option value="$PROJECT_DIR$/src/FactorOne.java" />
+        <option value="$PROJECT_DIR$/src/FactorTwo.java" />
+        <option value="$PROJECT_DIR$/src/FactorThree.java" />
         <option value="$PROJECT_DIR$/src/FactorFour.java" />
-        <option value="$PROJECT_DIR$/src/Var_elim.java" />
         <option value="$PROJECT_DIR$/src/Bayes.java" />
+        <option value="$PROJECT_DIR$/src/Factor.java" />
+        <option value="$PROJECT_DIR$/src/Var_elim.java" />
       </list>
     </option>
   </component>
@@ -212,7 +231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1555605502194</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Finished up to 5, I think">
+      <created>1555696694370</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1555696694370</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -250,7 +276,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding current progress" />
     <MESSAGE value="Finished up to 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished up to 3" />
+    <MESSAGE value="Finished up to 5, I think" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished up to 5, I think" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main.java" />
@@ -261,81 +288,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Bayes.java">
+    <entry file="file://$PROJECT_DIR$/src/Var_elim.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="27" column="63" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Factor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+        <state relative-caret-position="232">
+          <caret line="76" column="50" selection-start-line="76" selection-start-column="50" selection-end-line="76" selection-end-column="50" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FactorOne.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getVarValues#0;class#FactorOne#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FactorTwo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="31" column="45" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getVarValues#0;class#FactorTwo#0" />
-            <element signature="method#toString#0;class#FactorTwo#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/FactorThree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="111" column="5" selection-start-line="97" selection-start-column="4" selection-end-line="111" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#toString#0;class#FactorThree#0" />
+            <element signature="method#restrict#0;class#Var_elim#0" />
+            <element signature="e#2033#2554#1" />
+            <element signature="e#4856#15653#1" />
+            <element signature="e#6785#10609#1" />
+            <element signature="e#8274#15643#1" />
+            <element signature="e#11014#15629#1" />
+            <element signature="method#sumOut#0;class#Var_elim#0" />
+            <element signature="method#normalize#0;class#Var_elim#0" />
+            <element signature="n#!!doc;n#new1Factor#0;n#Var_elim#0" />
+            <element signature="n#!!doc;n#new2Factor#0;n#Var_elim#0" />
+            <element signature="n#!!doc;n#new3Factor#0;n#Var_elim#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FactorFour.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+        <state relative-caret-position="105">
+          <caret line="9" column="72" lean-forward="true" selection-start-line="9" selection-start-column="72" selection-end-line="9" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#FactorFour#0;class#FactorFour#0" />
             <element signature="method#getVarValues#0;class#FactorFour#0" />
+            <element signature="method#get2VarVals#0;class#FactorFour#0" />
             <element signature="method#get3VarVals#0;class#FactorFour#0" />
+            <marker date="1555706945630" expanded="true" signature="12266:13904" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Var_elim.java">
+    <entry file="file://$PROJECT_DIR$/src/FactorThree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1875">
-          <caret line="502" selection-start-line="502" selection-end-line="502" />
+        <state relative-caret-position="90">
+          <caret line="8" column="73" lean-forward="true" selection-start-line="8" selection-start-column="73" selection-end-line="8" selection-end-column="73" />
           <folding>
-            <element signature="method#multiple#0;class#Var_elim#0" />
-            <element signature="method#normalize#0;class#Var_elim#0" />
-            <element signature="method#new1Factor#0;class#Var_elim#0" />
-            <element signature="method#new2Factor#0;class#Var_elim#0" />
-            <element signature="method#new3Factor#0;class#Var_elim#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#get2VarVals#0;class#FactorThree#0" />
+            <element signature="e#3341#3342#0" expanded="true" />
+            <element signature="e#3375#3376#0" expanded="true" />
+            <element signature="e#3434#3435#0" expanded="true" />
+            <element signature="e#3465#3466#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FactorTwo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1394#1395#0" expanded="true" />
+            <element signature="e#1428#1429#0" expanded="true" />
+            <element signature="e#1487#1488#0" expanded="true" />
+            <element signature="e#1518#1519#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FactorOne.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Factor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bayes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="29" column="45" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
         </state>
       </provider>
     </entry>

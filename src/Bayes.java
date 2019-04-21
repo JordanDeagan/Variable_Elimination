@@ -15,38 +15,40 @@ public class Bayes {
         ArrayList<Float> mw = new ArrayList<>(Arrays.asList(.99f,.01f,.9f,.1f,.75f,.25f,.5f,.5f,.65f,.35f,.4f,.6f,.2f,.8f,0f,1f));
         ArrayList<Float> ms = new ArrayList<>(Arrays.asList(.05f,.95f));
         ArrayList<Float> fb = new ArrayList<>(Arrays.asList(.6f,.4f,.1f,.9f));
-        Factor FM = ve.new1Factor(M,fm);
-        Factor NA = ve.new1Factor(A,na);
-        Factor MS = ve.new1Factor(S,ms);
-        Factor FB = ve.new2Factor(B,fb);
-        Factor NSV = ve.new3Factor(V,nsv);
-        Factor MW = ve.new4Factor(W,mw);
-        HashMap<Character,Boolean> given = new HashMap<>();
+//        System.out.println("hello");
+        Factor FM = ve.new1Factor(M,fm,2);
+        Factor NA = ve.new1Factor(A,na,2);
+        Factor MS = ve.new1Factor(S,ms,2);
+        Factor FB = ve.new2Factor(B,fb,2);
+        Factor NSV = ve.new3Factor(V,nsv,2);
+        Factor MW = ve.new4Factor(W,mw,2);
+//        System.out.println("hey");
+        HashMap<Character,Integer> given = new HashMap<>();
         Factor splash = ve.inference(Arrays.asList(FM,NA,MS,NSV,MW),'w',Arrays.asList('a','m','s','v'),given);
 //        given.put('w',true);
-        given.put('m',true);
-        System.out.println(splash.getVarValues('w',true).get(0));
+        given.put('m',0);
+        System.out.println(splash.getVarValues('w',0).get(0));
         System.out.println();
 //        System.out.println(ve.restrict(FM,'m',true));d
         Factor splashWMoon = ve.inference(Arrays.asList(NA,MS,NSV,MW),'w',Arrays.asList('a','s','v'),given);
 //        System.out.println(splashWMoon);
-        float wGivenM = splashWMoon.getVarValues('w',true).get(0);
+        float wGivenM = splashWMoon.getVarValues('w',0).get(0);
 //        System.out.println(MS);
-        float s = MS.getVarValues('s',true).get(0);
-        given.put('s',true);
+        float s = MS.getVarValues('s',0).get(0);
+        given.put('s',0);
         Factor splashIfSick = ve.inference(Arrays.asList(NA,NSV,MW),'w',Arrays.asList('a','v'),given);
 //        System.out.println(splashIfSick);
-        float wGivenS = splashIfSick.getVarValues('w',true).get(0);
+        float wGivenS = splashIfSick.getVarValues('w',0).get(0);
         float sGivenW = (wGivenS*s)/wGivenM;
         System.out.println(sGivenW);
         System.out.println();
 
-        HashMap<Character,Boolean> given2 = new HashMap<>();
+        HashMap<Character,Integer> given2 = new HashMap<>();
         Factor bowl = ve.inference(Arrays.asList(FB,MS),'b',Arrays.asList('s'),given2);
-        given2.put('s',true);
+        given2.put('s',0);
         Factor bowlGivenSick = ve.inference(Arrays.asList(FB),'b',Arrays.asList(),given2);
-        float b = bowl.getVarValues('b',true).get(0);
-        float bGivenS = bowlGivenSick.getVarValues('b',true).get(0);
+        float b = bowl.getVarValues('b',0).get(0);
+        float bGivenS = bowlGivenSick.getVarValues('b',0).get(0);
         float sGivenB = (bGivenS*s)/b;
         float sGivenBW = (bGivenS*s*wGivenS)/(b*wGivenM);
 //        float sGivenBW2 = (bGivenS*s*wGivenM)/(b*wGivenM);
@@ -54,13 +56,16 @@ public class Bayes {
 //        System.out.println(sGivenBW2);
         System.out.println();
 
-        given.put('a',true);
+        given.put('a',0);
         Factor splashIfSick2 = ve.inference(Arrays.asList(NSV,MW),'w',Arrays.asList('v'),given);
         given.remove('s');
         Factor splashWAway = ve.inference(Arrays.asList(MS,NSV,MW),'w',Arrays.asList('s','v'),given);
-        float wGivenS2 = splashIfSick2.getVarValues('w',true).get(0);
-        float wGivenA = splashWAway.getVarValues('w',true).get(0);
+        float wGivenS2 = splashIfSick2.getVarValues('w',0).get(0);
+        float wGivenA = splashWAway.getVarValues('w',0).get(0);
         float sGivenBW2 = (bGivenS*s*wGivenS2)/(b*wGivenA);
         System.out.println(sGivenBW2);
+
+
+
     }
 }

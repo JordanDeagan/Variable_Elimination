@@ -3,27 +3,23 @@ import java.util.*;
 public class Var_elim {
     Var_elim(){}
 
-    Factor restrict(Factor factor, Character variable, boolean value){
+    Factor restrict(Factor factor, Character variable, int value){
         Factor result = null;
         ArrayList<Character> partial = new ArrayList<>(factor.getVariables());
         partial.remove(variable);
-        float t, f;
-        t = value ? 1 : 0;
-        f = value ? 0 : 1;
-        if(factor.factorSize()==1){
-            result = this.new1Factor(factor.getVariables(),new ArrayList<>(Arrays.asList(t,f)));
-        } else if(factor.factorSize()==2){
-            result = this.new1Factor(partial,factor.getVarValues(variable,value));
+        if(factor.factorSize()==2){
+            result = this.new1Factor(partial,factor.getVarValues(variable,value),factor.getSize());
         } else if (factor.factorSize()==3){
-            result = this.new2Factor(partial,factor.getVarValues(variable,value));
+            result = this.new2Factor(partial,factor.getVarValues(variable,value),factor.getSize());
         } else if (factor.factorSize()==4){
-            result = this.new3Factor(partial,factor.getVarValues(variable,value));
+            result = this.new3Factor(partial,factor.getVarValues(variable,value),factor.getSize());
         }
         return result;
     }
 
     Factor multiple(Factor factor1, Factor factor2){
         Factor result = null;
+        int size = factor1.getSize();
         ArrayList<Float> mult = new ArrayList<>();
         ArrayList<Character> vars = new ArrayList<>();
         if(factor1.factorSize()==1 || factor2.factorSize()==1){
@@ -37,107 +33,92 @@ public class Var_elim {
                 more = factor1;
             }
             Character onCombine = single.getVariables().get(0);
-            float firstTrue = single.getVarValues(onCombine,true).get(0);
-            float firstFalse = single.getVarValues(onCombine,false).get(0);
-            ArrayList<Float> secondTrue = new ArrayList<>(more.getVarValues(onCombine,true));
-            ArrayList<Float> secondFalse = new ArrayList<>(more.getVarValues(onCombine,false));
-            vars = new ArrayList<>(more.getVariables());
-            for(int i = 0;i<secondFalse.size();i++){
-                secondTrue.set(i,secondTrue.get(i)*firstTrue);
-                secondFalse.set(i,secondFalse.get(i)*firstFalse);
+            ArrayList<Float> original = new ArrayList<>();
+            for (int i = 0;i<size;i++){
+                original.add(single.getVarValues(onCombine,i).get(0));
             }
+            ArrayList<ArrayList<Float>> extra = new ArrayList<>();
+            for (int i = 0;i<size;i++){
+                extra.add(new ArrayList<>(more.getVarValues(onCombine,i)));
+            }
+            for (int i = 0;i<size;i++){
+                for(int j = 0;j<extra.get(i).size();j++){
+                    extra.get(i).set(j,extra.get(i).get(j)*original.get(i));
+                }
+            }
+            vars = new ArrayList<>(more.getVariables());
             if(more.factorSize()==2){
                 if (more.getVariables().indexOf(onCombine)==0){
-                    mult.addAll(secondTrue);
-                    mult.addAll(secondFalse);
+                    for(int i = 0;i<size;i++){
+                        mult.addAll(extra.get(i));
+                    }
                 } else {
-                    mult.add(secondTrue.get(0));
-                    mult.add(secondFalse.get(0));
-                    mult.add(secondTrue.get(1));
-                    mult.add(secondFalse.get(1));
+                    for(int i = 0;i<size;i++){
+                        for(int j = 0;j<size;j++) {
+                            mult.add(extra.get(j).get(i));
+                        }
+                    }
                 }
-                result = this.new2Factor(vars,mult);
+                result = this.new2Factor(vars,mult,size);
             } else if(more.factorSize()==3){
                 if (more.getVariables().indexOf(onCombine)==0){
-                    mult.addAll(secondTrue);
-                    mult.addAll(secondFalse);
+                    for(int i = 0;i<size;i++){
+                        mult.addAll(extra.get(i));
+                    }
                 } else if (more.getVariables().indexOf(onCombine)==1) {
-                    mult.add(secondTrue.get(0));
-                    mult.add(secondTrue.get(1));
-                    mult.add(secondFalse.get(0));
-                    mult.add(secondFalse.get(1));
-                    mult.add(secondTrue.get(2));
-                    mult.add(secondTrue.get(3));
-                    mult.add(secondFalse.get(2));
-                    mult.add(secondFalse.get(3));
+                    for (int i = 0; i < Math.pow(size , 2); i += size) {
+                        for (int j = 0; j < size; j++) {
+                            for (int k = 0;k<size;k++) {
+                                mult.add(extra.get(j).get(i+k));
+                            }
+                        }
+                    }
                 } else {
-                    mult.add(secondTrue.get(0));
-                    mult.add(secondFalse.get(0));
-                    mult.add(secondTrue.get(1));
-                    mult.add(secondFalse.get(1));
-                    mult.add(secondTrue.get(2));
-                    mult.add(secondFalse.get(2));
-                    mult.add(secondTrue.get(3));
-                    mult.add(secondFalse.get(3));
+                    for(int i = 0;i<Math.pow(size,2);i++){
+                        for(int j = 0;j<size;j++) {
+                            mult.add(extra.get(j).get(i));
+                        }
+                    }
                 }
-                result = this.new3Factor(vars,mult);
+                result = this.new3Factor(vars,mult,size);
             } else {
+//                System.out.println("4");
                 if (more.getVariables().indexOf(onCombine)==0){
-                    mult.addAll(secondTrue);
-                    mult.addAll(secondFalse);
+//                    System.out.println("0");
+                    for(int i = 0;i<size;i++){
+                        mult.addAll(extra.get(i));
+                    }
                 } else if (more.getVariables().indexOf(onCombine)==1) {
-                    mult.add(secondTrue.get(0));
-                    mult.add(secondTrue.get(1));
-                    mult.add(secondTrue.get(2));
-                    mult.add(secondTrue.get(3));
-                    mult.add(secondFalse.get(0));
-                    mult.add(secondFalse.get(1));
-                    mult.add(secondFalse.get(2));
-                    mult.add(secondFalse.get(3));
-                    mult.add(secondTrue.get(4));
-                    mult.add(secondTrue.get(5));
-                    mult.add(secondTrue.get(6));
-                    mult.add(secondTrue.get(7));
-                    mult.add(secondFalse.get(4));
-                    mult.add(secondFalse.get(5));
-                    mult.add(secondFalse.get(6));
-                    mult.add(secondFalse.get(7));
+//                    System.out.println("1");
+//                    System.out.println("size = "+size);
+                    for (int i = 0; i < Math.pow(size,3); i+=Math.pow(size,2)) {
+//                        System.out.println("i = "+i);
+                        for (int j = 0; j < size; j++) {
+//                            System.out.println("j = "+j);
+                            for (int k = 0; k < Math.pow(size,2); k++) {
+//                                System.out.println("k = "+k);
+                                mult.add(extra.get(j).get(i+k));
+                            }
+                        }
+                    }
                 } else if(more.getVariables().indexOf(onCombine)==2){
-                    mult.add(secondTrue.get(0));
-                    mult.add(secondTrue.get(1));
-                    mult.add(secondFalse.get(0));
-                    mult.add(secondFalse.get(1));
-                    mult.add(secondTrue.get(2));
-                    mult.add(secondTrue.get(3));
-                    mult.add(secondFalse.get(2));
-                    mult.add(secondFalse.get(3));
-                    mult.add(secondTrue.get(4));
-                    mult.add(secondTrue.get(5));
-                    mult.add(secondFalse.get(4));
-                    mult.add(secondFalse.get(5));
-                    mult.add(secondTrue.get(6));
-                    mult.add(secondTrue.get(7));
-                    mult.add(secondFalse.get(6));
-                    mult.add(secondFalse.get(7));
+//                    System.out.println("2");
+                    for (int i = 0; i < Math.pow(size,3); i+=size) {
+                        for (int j = 0; j < size; j++) {
+                            for (int k = 0; k < size; k++) {
+                                mult.add(extra.get(j).get(i+k));
+                            }
+                        }
+                    }
                 } else {
-                    mult.add(secondTrue.get(0));
-                    mult.add(secondFalse.get(0));
-                    mult.add(secondTrue.get(1));
-                    mult.add(secondFalse.get(1));
-                    mult.add(secondTrue.get(2));
-                    mult.add(secondFalse.get(2));
-                    mult.add(secondTrue.get(3));
-                    mult.add(secondFalse.get(3));
-                    mult.add(secondTrue.get(4));
-                    mult.add(secondFalse.get(4));
-                    mult.add(secondTrue.get(5));
-                    mult.add(secondFalse.get(5));
-                    mult.add(secondTrue.get(6));
-                    mult.add(secondFalse.get(6));
-                    mult.add(secondTrue.get(7));
-                    mult.add(secondFalse.get(7));
+//                    System.out.println("3");
+                    for(int i = 0;i<Math.pow(size,3);i++){
+                        for(int j = 0;j<size;j++) {
+                            mult.add(extra.get(j).get(i));
+                        }
+                    }
                 }
-                result = this.new4Factor(vars, mult);
+                result = this.new4Factor(vars, mult,size);
             }
         } else if(factor1.factorSize()==2 || factor2.factorSize()==2) {
             Factor two;
@@ -157,339 +138,241 @@ public class Var_elim {
                 ArrayList<Character> alt = new ArrayList<>(two.getVariables());
                 alt.remove(onC);
                 vars.addAll(alt);
+
+                ArrayList<ArrayList<Float>> original = new ArrayList<>();
+                for (int i = 0;i<size;i++){
+                    original.add(new ArrayList<>(two.getVarValues(onC,i)));
+                }
+
+                ArrayList<ArrayList<Float>> extra = new ArrayList<>();
+                for (int i = 0;i<size;i++){
+                    extra.add(new ArrayList<>(other.getVarValues(onC,i)));
+                }
+
+                ArrayList<ArrayList<Float>> temp = new ArrayList<>();
+                for(int i = 0;i<Math.pow(size,other.factorSize());i++){
+                    temp.add(new ArrayList<>());
+                }
+
+                for(int i = 0;i<size;i++){
+                    for(int j = 0;j<Math.pow(size,(other.factorSize()-1));j++) {
+                        for(int k = 0;k<size;k++) {
+                            temp.get(i * (int)Math.pow(size,(other.factorSize()-1)) + j).add(extra.get(i).get(j) * original.get(i).get(k));
+                        }
+                    }
+                }
                 if(other.factorSize()==2){
-                    ArrayList<Float> temp1 = new ArrayList<>(other.getAllValues());
-                    ArrayList<Float> temp2 = new ArrayList<>();
-                    ArrayList<Float> temp3 = new ArrayList<>();
-                    ArrayList<Float> temp4 = new ArrayList<>();
-                    ArrayList<Float> temp5 = new ArrayList<>();
-
-                    ArrayList<Float> onTrue = new ArrayList<>(two.getVarValues(onC,true));
-                    ArrayList<Float> onFalse = new ArrayList<>(two.getVarValues(onC,false));
-
-                    for(int i = 0;i<2;i++){
-                        if(other.getVariables().indexOf(onC)==0){
-                            temp2.add(temp1.get(0)*onTrue.get(i));
-                            temp3.add(temp1.get(1)*onTrue.get(i));
-                            temp4.add(temp1.get(2)*onFalse.get(i));
-                            temp5.add(temp1.get(3)*onFalse.get(i));
-                        } else{
-                            temp2.add(temp1.get(0)*onTrue.get(i));
-                            temp3.add(temp1.get(1)*onFalse.get(i));
-                            temp4.add(temp1.get(2)*onTrue.get(i));
-                            temp5.add(temp1.get(3)*onFalse.get(i));
+                    if (other.getVariables().indexOf(onC) == 0) {
+                        for (int i = 0;i<temp.size();i++) {
+                            mult.addAll(temp.get(i));
+                        }
+                    } else {
+                        for (int i = 0;i<size;i++) {
+                            for (int j = 0;j<Math.pow(size,2);i+=size) {
+                                mult.addAll(temp.get(i+j));
+                            }
                         }
                     }
-                    mult.addAll(temp2);
-                    mult.addAll(temp3);
-                    mult.addAll(temp4);
-                    mult.addAll(temp5);
-                    result = this.new3Factor(vars, mult);
+                    result = this.new3Factor(vars, mult,size);
                 } else if (other.factorSize()==3){
-                    FactorThree three = (FactorThree) other;
-                    ArrayList<Float> temp1 = new ArrayList<>(three.getAllValues());
-                    ArrayList<Float> temp2 = new ArrayList<>();
-                    ArrayList<Float> temp3 = new ArrayList<>();
-                    ArrayList<Float> temp4 = new ArrayList<>();
-                    ArrayList<Float> temp5 = new ArrayList<>();
-                    ArrayList<Float> temp6 = new ArrayList<>();
-                    ArrayList<Float> temp7 = new ArrayList<>();
-                    ArrayList<Float> temp8 = new ArrayList<>();
-                    ArrayList<Float> temp9 = new ArrayList<>();
-
-                    ArrayList<Float> onTrue = new ArrayList<>(two.getVarValues(onC,true));
-                    ArrayList<Float> onFalse = new ArrayList<>(two.getVarValues(onC,false));
-
-                    for(int i = 0;i<2;i++){
-                        if(three.getVariables().indexOf(onC)==0){
-                            temp2.add(temp1.get(0)*onTrue.get(i));
-                            temp3.add(temp1.get(1)*onTrue.get(i));
-                            temp4.add(temp1.get(2)*onTrue.get(i));
-                            temp5.add(temp1.get(3)*onTrue.get(i));
-                            temp6.add(temp1.get(4)*onFalse.get(i));
-                            temp7.add(temp1.get(5)*onFalse.get(i));
-                            temp8.add(temp1.get(6)*onFalse.get(i));
-                            temp9.add(temp1.get(7)*onFalse.get(i));
-                        } else if (three.getVariables().indexOf(onC)==1){
-                            temp2.add(temp1.get(0)*onTrue.get(i));
-                            temp3.add(temp1.get(1)*onTrue.get(i));
-                            temp4.add(temp1.get(2)*onFalse.get(i));
-                            temp5.add(temp1.get(3)*onFalse.get(i));
-                            temp6.add(temp1.get(4)*onTrue.get(i));
-                            temp7.add(temp1.get(5)*onTrue.get(i));
-                            temp8.add(temp1.get(6)*onFalse.get(i));
-                            temp9.add(temp1.get(7)*onFalse.get(i));
-                        } else {
-                            temp2.add(temp1.get(0)*onTrue.get(i));
-                            temp3.add(temp1.get(1)*onFalse.get(i));
-                            temp4.add(temp1.get(2)*onTrue.get(i));
-                            temp5.add(temp1.get(3)*onFalse.get(i));
-                            temp6.add(temp1.get(4)*onTrue.get(i));
-                            temp7.add(temp1.get(5)*onFalse.get(i));
-                            temp8.add(temp1.get(6)*onTrue.get(i));
-                            temp9.add(temp1.get(7)*onFalse.get(i));
+                    if(other.getVariables().indexOf(onC)==0){
+                        for (int i = 0;i<(size*size);i++) {
+                            mult.addAll(temp.get(i));
+                        }
+                    } else if (other.getVariables().indexOf(onC)==1){
+                        for (int i = 0;i<size;i++) {
+                            for (int j = 0;j<Math.pow(size,3);i+=size) {
+                                mult.addAll(temp.get(i+j));
+                            }
+                        }
+                    } else {
+                        for (int i = 0;i<Math.pow(size,2);i+=size) {
+                            for (int j = 0;j<Math.pow(size,3);i+=Math.pow(size,2)) {
+                                for (int k = 0;k<size;k++) {
+                                    mult.addAll(temp.get(i + j + k));
+                                }
+                            }
                         }
                     }
-                    mult.addAll(temp2);
-                    mult.addAll(temp3);
-                    mult.addAll(temp4);
-                    mult.addAll(temp5);
-                    mult.addAll(temp6);
-                    mult.addAll(temp7);
-                    mult.addAll(temp8);
-                    mult.addAll(temp9);
-                    result = this.new4Factor(vars, mult);
+                    result = this.new4Factor(vars, mult,size);
                 }
             } else if(onCombine.size()==2){
                 vars = new ArrayList<>(other.getVariables());
+                if(vars.indexOf(onCombine.get(0))>vars.indexOf(onCombine.get(1))){
+                    onCombine = new ArrayList<>(Arrays.asList(onCombine.get(1),onCombine.get(0)));
+                }
+                ArrayList<Float> twoValues = new ArrayList<>();
+                for (int i = 0;i<size;i++){
+                    twoValues.addAll(two.getVarValues(onCombine.get(0),i));
+                }
                 if(other.factorSize()==2){
                     mult=new ArrayList<>(other.getAllValues());
-                    result = this.new2Factor(vars, mult);
+                    result = this.new2Factor(vars, mult, size);
                 } else if(other.factorSize()==3){
                     FactorThree three = (FactorThree)other;
-                    ArrayList<Float> twoValues = new ArrayList<>(two.getAllValues());
-                    ArrayList<Float> threeVals = new ArrayList<>(three.getAllValues());
-                    if((three.getVariables().indexOf(onCombine.get(0))==0 || three.getVariables().indexOf(onCombine.get(1))==0)
-                            &&(three.getVariables().indexOf(onCombine.get(0))==1 || three.getVariables().indexOf(onCombine.get(1))==1)){
-                        mult.add(threeVals.get(0)*twoValues.get(0));
-                        mult.add(threeVals.get(1)*twoValues.get(0));
-                        mult.add(threeVals.get(2)*twoValues.get(1));
-                        mult.add(threeVals.get(3)*twoValues.get(1));
-                        mult.add(threeVals.get(4)*twoValues.get(2));
-                        mult.add(threeVals.get(5)*twoValues.get(2));
-                        mult.add(threeVals.get(6)*twoValues.get(3));
-                        mult.add(threeVals.get(7)*twoValues.get(3));
-                    } else if((three.getVariables().indexOf(onCombine.get(0))==0 || three.getVariables().indexOf(onCombine.get(1))==0)
-                            &&(three.getVariables().indexOf(onCombine.get(0))==2 || three.getVariables().indexOf(onCombine.get(1))==2)){
-                        mult.add(threeVals.get(0)*twoValues.get(0));
-                        mult.add(threeVals.get(1)*twoValues.get(1));
-                        mult.add(threeVals.get(2)*twoValues.get(0));
-                        mult.add(threeVals.get(3)*twoValues.get(1));
-                        mult.add(threeVals.get(4)*twoValues.get(2));
-                        mult.add(threeVals.get(5)*twoValues.get(3));
-                        mult.add(threeVals.get(6)*twoValues.get(2));
-                        mult.add(threeVals.get(7)*twoValues.get(3));
-                    } else if((three.getVariables().indexOf(onCombine.get(0))==1 || three.getVariables().indexOf(onCombine.get(1))==1)
-                            &&(three.getVariables().indexOf(onCombine.get(0))==2 || three.getVariables().indexOf(onCombine.get(1))==2)){
-                        mult.add(threeVals.get(0)*twoValues.get(0));
-                        mult.add(threeVals.get(1)*twoValues.get(1));
-                        mult.add(threeVals.get(2)*twoValues.get(2));
-                        mult.add(threeVals.get(3)*twoValues.get(3));
-                        mult.add(threeVals.get(4)*twoValues.get(0));
-                        mult.add(threeVals.get(5)*twoValues.get(1));
-                        mult.add(threeVals.get(6)*twoValues.get(2));
-                        mult.add(threeVals.get(7)*twoValues.get(3));
+
+                    ArrayList<ArrayList<Float>> threeVals = new ArrayList<>();
+                    for (int i = 0;i<size;i++){
+                        for (int j = 0;j<size;j++) {
+                            threeVals.add(new ArrayList<>(three.get2VarVals(onCombine.get(0),onCombine.get(1),i,j)));
+                        }
                     }
-                    result = this.new3Factor(vars, mult);
+                    if(three.getVariables().indexOf(onCombine.get(0))==0 && three.getVariables().indexOf(onCombine.get(1))==1){
+                        for(int i = 0;i<Math.pow(size,2);i++){
+                            for (int j = 0;j<size;j++){
+                                mult.add(threeVals.get(i).get(j) * twoValues.get(i));
+                            }
+                        }
+                    } else if(three.getVariables().indexOf(onCombine.get(0))==0 && three.getVariables().indexOf(onCombine.get(1))==2){
+                        for(int i = 0;i<Math.pow(size,2);i+=size){
+                            for (int j = 0;j<size;j++){
+                                for (int k = 0;k<size;k++) {
+                                    for (int l = 0;l<size;l++) {
+                                        mult.add(threeVals.get(i+l).get(j + k) * twoValues.get(i+l));
+                                    }
+                                }
+                            }
+                        }
+                    } else if(three.getVariables().indexOf(onCombine.get(0))==1 && three.getVariables().indexOf(onCombine.get(1))==2){
+                        for (int k = 0;k<Math.pow(size , 2);k+=size) {
+                            for (int i = 0; i < size; i++) {
+                                for (int j = 0; j < size; j++) {
+                                    mult.add(threeVals.get(i).get(j+k) * twoValues.get(i));
+                                }
+                            }
+                        }
+                    }
+                    result = this.new3Factor(vars, mult,size);
                 } else if(other.factorSize()==4){
                     FactorFour four = (FactorFour)other;
-                    ArrayList<Float> twoValues = new ArrayList<>(two.getAllValues());
-                    ArrayList<Float> fourVals = new ArrayList<>(four.getAllValues());
-                    if((four.getVariables().indexOf(onCombine.get(0))==0 || four.getVariables().indexOf(onCombine.get(1))==0)
-                            &&(four.getVariables().indexOf(onCombine.get(0))==1 || four.getVariables().indexOf(onCombine.get(1))==1)){
-                        mult.add(fourVals.get(0)*twoValues.get(0));
-                        mult.add(fourVals.get(1)*twoValues.get(0));
-                        mult.add(fourVals.get(2)*twoValues.get(0));
-                        mult.add(fourVals.get(3)*twoValues.get(0));
-                        mult.add(fourVals.get(4)*twoValues.get(1));
-                        mult.add(fourVals.get(5)*twoValues.get(1));
-                        mult.add(fourVals.get(6)*twoValues.get(1));
-                        mult.add(fourVals.get(7)*twoValues.get(1));
-                        mult.add(fourVals.get(8)*twoValues.get(2));
-                        mult.add(fourVals.get(9)*twoValues.get(2));
-                        mult.add(fourVals.get(10)*twoValues.get(2));
-                        mult.add(fourVals.get(11)*twoValues.get(2));
-                        mult.add(fourVals.get(12)*twoValues.get(3));
-                        mult.add(fourVals.get(13)*twoValues.get(3));
-                        mult.add(fourVals.get(14)*twoValues.get(3));
-                        mult.add(fourVals.get(15)*twoValues.get(3));
-                    } else if((four.getVariables().indexOf(onCombine.get(0))==0 || four.getVariables().indexOf(onCombine.get(1))==0)
-                            &&(four.getVariables().indexOf(onCombine.get(0))==2 || four.getVariables().indexOf(onCombine.get(1))==2)){
-                        mult.add(fourVals.get(0)*twoValues.get(0));
-                        mult.add(fourVals.get(1)*twoValues.get(0));
-                        mult.add(fourVals.get(2)*twoValues.get(1));
-                        mult.add(fourVals.get(3)*twoValues.get(1));
-                        mult.add(fourVals.get(4)*twoValues.get(0));
-                        mult.add(fourVals.get(5)*twoValues.get(0));
-                        mult.add(fourVals.get(6)*twoValues.get(1));
-                        mult.add(fourVals.get(7)*twoValues.get(1));
-                        mult.add(fourVals.get(8)*twoValues.get(2));
-                        mult.add(fourVals.get(9)*twoValues.get(2));
-                        mult.add(fourVals.get(10)*twoValues.get(3));
-                        mult.add(fourVals.get(11)*twoValues.get(3));
-                        mult.add(fourVals.get(12)*twoValues.get(2));
-                        mult.add(fourVals.get(13)*twoValues.get(2));
-                        mult.add(fourVals.get(14)*twoValues.get(3));
-                        mult.add(fourVals.get(15)*twoValues.get(3));
-                    } else if((four.getVariables().indexOf(onCombine.get(0))==0 || four.getVariables().indexOf(onCombine.get(1))==0)
-                            &&(four.getVariables().indexOf(onCombine.get(0))==3 || four.getVariables().indexOf(onCombine.get(1))==3)){
-                        mult.add(fourVals.get(0)*twoValues.get(0));
-                        mult.add(fourVals.get(1)*twoValues.get(1));
-                        mult.add(fourVals.get(2)*twoValues.get(0));
-                        mult.add(fourVals.get(3)*twoValues.get(1));
-                        mult.add(fourVals.get(4)*twoValues.get(0));
-                        mult.add(fourVals.get(5)*twoValues.get(1));
-                        mult.add(fourVals.get(6)*twoValues.get(0));
-                        mult.add(fourVals.get(7)*twoValues.get(1));
-                        mult.add(fourVals.get(8)*twoValues.get(2));
-                        mult.add(fourVals.get(9)*twoValues.get(3));
-                        mult.add(fourVals.get(10)*twoValues.get(2));
-                        mult.add(fourVals.get(11)*twoValues.get(3));
-                        mult.add(fourVals.get(12)*twoValues.get(2));
-                        mult.add(fourVals.get(13)*twoValues.get(3));
-                        mult.add(fourVals.get(14)*twoValues.get(2));
-                        mult.add(fourVals.get(15)*twoValues.get(3));
-                    } else if((four.getVariables().indexOf(onCombine.get(0))==1 || four.getVariables().indexOf(onCombine.get(1))==1)
-                            &&(four.getVariables().indexOf(onCombine.get(0))==2 || four.getVariables().indexOf(onCombine.get(1))==2)){
-                        mult.add(fourVals.get(0)*twoValues.get(0));
-                        mult.add(fourVals.get(1)*twoValues.get(0));
-                        mult.add(fourVals.get(2)*twoValues.get(1));
-                        mult.add(fourVals.get(3)*twoValues.get(1));
-                        mult.add(fourVals.get(4)*twoValues.get(2));
-                        mult.add(fourVals.get(5)*twoValues.get(2));
-                        mult.add(fourVals.get(6)*twoValues.get(3));
-                        mult.add(fourVals.get(7)*twoValues.get(3));
-                        mult.add(fourVals.get(8)*twoValues.get(0));
-                        mult.add(fourVals.get(9)*twoValues.get(0));
-                        mult.add(fourVals.get(10)*twoValues.get(1));
-                        mult.add(fourVals.get(11)*twoValues.get(1));
-                        mult.add(fourVals.get(12)*twoValues.get(2));
-                        mult.add(fourVals.get(13)*twoValues.get(2));
-                        mult.add(fourVals.get(14)*twoValues.get(3));
-                        mult.add(fourVals.get(15)*twoValues.get(3));
-                    } else if((four.getVariables().indexOf(onCombine.get(0))==1 || four.getVariables().indexOf(onCombine.get(1))==1)
-                            &&(four.getVariables().indexOf(onCombine.get(0))==3 || four.getVariables().indexOf(onCombine.get(1))==3)){
-                        mult.add(fourVals.get(0)*twoValues.get(0));
-                        mult.add(fourVals.get(1)*twoValues.get(1));
-                        mult.add(fourVals.get(2)*twoValues.get(0));
-                        mult.add(fourVals.get(3)*twoValues.get(1));
-                        mult.add(fourVals.get(4)*twoValues.get(2));
-                        mult.add(fourVals.get(5)*twoValues.get(3));
-                        mult.add(fourVals.get(6)*twoValues.get(2));
-                        mult.add(fourVals.get(7)*twoValues.get(3));
-                        mult.add(fourVals.get(8)*twoValues.get(0));
-                        mult.add(fourVals.get(9)*twoValues.get(1));
-                        mult.add(fourVals.get(10)*twoValues.get(0));
-                        mult.add(fourVals.get(11)*twoValues.get(1));
-                        mult.add(fourVals.get(12)*twoValues.get(2));
-                        mult.add(fourVals.get(13)*twoValues.get(3));
-                        mult.add(fourVals.get(14)*twoValues.get(2));
-                        mult.add(fourVals.get(15)*twoValues.get(3));
-                    } else if((four.getVariables().indexOf(onCombine.get(0))==2 || four.getVariables().indexOf(onCombine.get(1))==2)
-                            &&(four.getVariables().indexOf(onCombine.get(0))==3 || four.getVariables().indexOf(onCombine.get(1))==3)){
-                        mult.add(fourVals.get(0)*twoValues.get(0));
-                        mult.add(fourVals.get(1)*twoValues.get(1));
-                        mult.add(fourVals.get(2)*twoValues.get(2));
-                        mult.add(fourVals.get(3)*twoValues.get(3));
-                        mult.add(fourVals.get(4)*twoValues.get(0));
-                        mult.add(fourVals.get(5)*twoValues.get(1));
-                        mult.add(fourVals.get(6)*twoValues.get(2));
-                        mult.add(fourVals.get(7)*twoValues.get(3));
-                        mult.add(fourVals.get(8)*twoValues.get(0));
-                        mult.add(fourVals.get(9)*twoValues.get(1));
-                        mult.add(fourVals.get(10)*twoValues.get(2));
-                        mult.add(fourVals.get(11)*twoValues.get(3));
-                        mult.add(fourVals.get(12)*twoValues.get(0));
-                        mult.add(fourVals.get(13)*twoValues.get(1));
-                        mult.add(fourVals.get(14)*twoValues.get(2));
-                        mult.add(fourVals.get(15)*twoValues.get(3));
+
+                    ArrayList<ArrayList<Float>> fourVals = new ArrayList<>();
+                    for (int i = 0;i<size;i++){
+                        for (int j = 0;j<size;j++) {
+                            fourVals.add(new ArrayList<>(four.get2VarVals(onCombine.get(0),onCombine.get(1),i,j)));
+                        }
                     }
-                    result = this.new4Factor(vars, mult);
+                    if((four.getVariables().indexOf(onCombine.get(0))==0 && four.getVariables().indexOf(onCombine.get(1))==1)){
+                        for(int i = 0;i<Math.pow(size,2);i++){
+                            for (int j = 0;j<Math.pow(size,2);j++){
+                                mult.add(fourVals.get(i).get(j) * twoValues.get(i));
+                            }
+                        }
+                    } else if((four.getVariables().indexOf(onCombine.get(0))==0 && four.getVariables().indexOf(onCombine.get(1))==2)){
+                        for(int i = 0;i<Math.pow(size,2);i+=size){
+                            for (int j = 0;j<Math.pow(size,2);j+=size){
+                                for (int l = 0;l<size;l++) {
+                                    for (int k = 0;k<size;k++) {
+                                        mult.add(fourVals.get(i+l).get(j + k) * twoValues.get(i+l));
+                                    }
+                                }
+                            }
+                        }
+                    } else if((four.getVariables().indexOf(onCombine.get(0))==0 && four.getVariables().indexOf(onCombine.get(1))==3)){
+                        for(int i = 0;i<Math.pow(size,2);i+=size){
+                            for (int j = 0;j<Math.pow(size,2);j++){
+                                for (int l = 0;l<size;l++) {
+                                    mult.add(fourVals.get(i+l).get(j) * twoValues.get(i+l));
+                                }
+                            }
+                        }
+                    } else if((four.getVariables().indexOf(onCombine.get(0))==1 && four.getVariables().indexOf(onCombine.get(1))==2)){
+                        for(int i = 0;i<Math.pow(size,2);i+=size){
+                            for (int j = 0;j<Math.pow(size,2);j++) {
+                                for (int k = 0;k<size;k++){
+                                    mult.add(fourVals.get(j).get(i+k) * twoValues.get(j));
+                                }
+                            }
+                        }
+                    } else if((four.getVariables().indexOf(onCombine.get(0))==1 && four.getVariables().indexOf(onCombine.get(1))==3)){
+                        for(int i = 0;i<Math.pow(size,2);i+=size){
+                            for (int j = 0;j<Math.pow(size,2);j+=size) {
+                                for (int k = 0;k<size;k++){
+                                    for (int l = 0;l<size;l++) {
+                                        mult.add(fourVals.get(j+l).get(i + k) * twoValues.get(j+l));
+                                    }
+                                }
+                            }
+                        }
+                    } else if((four.getVariables().indexOf(onCombine.get(0))==2 && four.getVariables().indexOf(onCombine.get(1))==3)){
+                        for(int i = 0;i<Math.pow(size,2);i++){
+                            for (int j = 0;j<Math.pow(size,2);j++) {
+                                mult.add(fourVals.get(j).get(i) * twoValues.get(j));
+                            }
+                        }
+                    }
+                    result = this.new4Factor(vars, mult,size);
                 }
             }
         }
+//        System.out.println("result = "+result);
         return result;
     }
 
     Factor sumOut(Factor factor, Character variable){
         ArrayList<Character> partial = new ArrayList<>(factor.getVariables());
         partial.remove(variable);
+        int size = factor.getSize();
         Factor result = null;
         if(factor.factorSize()==2){
-            float bTrue = 0;
-            float bFalse = 0;
-            for (Float num: factor.getVarValues(partial.get(0),true)){
-                bTrue+=num;
+            ArrayList<Float> summed = new ArrayList<>();
+            for (int i = 0;i<size;i++){
+                Float temp = 0f;
+                for (Float num: factor.getVarValues(partial.get(0),i)){
+                    temp+=num;
+                }
+                summed.add(temp);
             }
-            for (Float num: factor.getVarValues(partial.get(0),false)){
-                bFalse+=num;
-            }
-            ArrayList<Float> summed = new ArrayList<>(Arrays.asList(bTrue,bFalse));
-            result = this.new1Factor(partial,summed);
+            result = this.new1Factor(partial,summed, size);
         } else if (factor.factorSize()==3){
-            float bTruecTrue = 0;
-            float bTruecFalse = 0;
-            float bFalsecTrue = 0;
-            float bFalsecFalse = 0;
             FactorThree useful = (FactorThree)factor;
-            for (Float num: useful.get2VarVals(partial.get(0),partial.get(1),true,true)){
-                bTruecTrue+=num;
+            ArrayList<Float> summed = new ArrayList<>();
+            for (int i = 0;i<size;i++){
+                for (int j = 0;j<size;j++){
+                    Float temp = 0f;
+                    for (Float num: useful.get2VarVals(partial.get(0),partial.get(1),i,j)){
+                        temp+=num;
+                    }
+                    summed.add(temp);
+                }
             }
-            for (Float num: useful.get2VarVals(partial.get(0),partial.get(1),true,false)){
-                bTruecFalse+=num;
-            }
-            for (Float num: useful.get2VarVals(partial.get(0),partial.get(1),false,true)){
-                bFalsecTrue+=num;
-            }
-            for (Float num: useful.get2VarVals(partial.get(0),partial.get(1),false,false)){
-                bFalsecFalse+=num;
-            }
-            ArrayList<Float> summed = new ArrayList<>(Arrays.asList(bTruecTrue,bTruecFalse,bFalsecTrue,bFalsecFalse));
-            result = this.new2Factor(partial,summed);
+            result = this.new2Factor(partial,summed, size);
         } else if (factor.factorSize()==4){
-            float ttt = 0;
-            float ttf = 0;
-            float tft = 0;
-            float tff = 0;
-            float ftt = 0;
-            float ftf = 0;
-            float fft = 0;
-            float fff = 0;
             FactorFour useful = (FactorFour)factor;
-            for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),true,true,true)){
-                ttt+=num;
+            ArrayList<Float> summed = new ArrayList<>();
+            for (int i = 0;i<size;i++){
+                for (int j = 0;j<size;j++){
+                    for (int k = 0;k<size;k++){
+                        Float temp = 0f;
+                        for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),i,j,k)){
+                            temp+=num;
+                        }
+                        summed.add(temp);
+                    }
+                }
             }
-            for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),true,true,false)){
-                ttf+=num;
-            }
-            for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),true,false,true)){
-                tft+=num;
-            }
-            for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),true,false,false)){
-                tff+=num;
-            }
-            for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),false,true,true)){
-                ftt+=num;
-            }
-            for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),false,true,false)){
-                ftf+=num;
-            }
-            for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),false,false,true)){
-                fft+=num;
-            }
-            for (Float num: useful.get3VarVals(partial.get(0),partial.get(1),partial.get(2),false,false,false)){
-                fff+=num;
-            }
-            ArrayList<Float> summed = new ArrayList<>(Arrays.asList(ttt,ttf,tft,tff,ftt,ftf,fft,fff));
-            result = this.new3Factor(partial,summed);
+            result = this.new3Factor(partial,summed, size);
         }
         return result;
     }
 
-    public Factor inference(List<Factor> factorList, Character quereyVars, List<Character> orderedHiddenVars, Map<Character,Boolean> evidence){
+    public Factor inference(List<Factor> factorList, Character quereyVars, List<Character> orderedHiddenVars, Map<Character,Integer> evidence){
         ArrayList<Factor> factors=new ArrayList<>(factorList);
-        for(Map.Entry<Character,Boolean> entry:evidence.entrySet()){
+        for(Map.Entry<Character,Integer> entry:evidence.entrySet()){
             for(int j = 0;j<factors.size();j++){
                 if(factors.get(j).containsVar(entry.getKey())){
                     Factor temp = this.restrict(factors.get(j),entry.getKey(),entry.getValue());
                     if (temp==null) throw new AssertionError("restrict returned null");
                     factors.set(j,temp);
                 }
+//                System.out.println(factors.get(j));
             }
         }
+//        System.out.println("restricted");
         for(Character var:orderedHiddenVars){
             factors = this.multiplyAndSum(factors,var);
         }
+//        System.out.println("multiplied");
         if(factors.size()!=1){
             throw new AssertionError("not all factor's summed out");
         }
@@ -500,6 +383,7 @@ public class Var_elim {
         Factor f1 = null;
         ArrayList<Factor> result = new ArrayList<>();
         for (Factor f:factors){
+//            System.out.println(f);
             if(f.containsVar(sumOn)){
                 if(f1==null){
                     f1=f;
@@ -512,6 +396,7 @@ public class Var_elim {
                 result.add(f);
             }
         }
+//        System.out.println("Multiple and Sum");
         if(f1==null){
             return result;
         }
@@ -531,43 +416,43 @@ public class Var_elim {
         }
         Factor simplified = null;
         if(factor.factorSize()==1){
-            simplified = this.new1Factor(factor.getVariables(),newF);
+            simplified = this.new1Factor(factor.getVariables(),newF, factor.getSize());
         } else if (factor.factorSize()==2){
-            simplified = this.new2Factor(factor.getVariables(),newF);
+            simplified = this.new2Factor(factor.getVariables(),newF, factor.getSize());
         } else if (factor.factorSize()==3){
-            simplified = this.new3Factor(factor.getVariables(),newF);
+            simplified = this.new3Factor(factor.getVariables(),newF, factor.getSize());
         }
         return simplified;
     }
 
-    Factor new1Factor(){
-        ArrayList<Character> vars = new ArrayList<>(Collections.singletonList('a'));
-        ArrayList<Float> vals = new ArrayList<>(Arrays.asList(.9f, .1f));
-        return new FactorOne(vars, vals);
-    }
-    Factor new1Factor(List<Character> vars, List<Float> vals){
-        return new FactorOne(vars, vals);
-    }
-
-    Factor new2Factor(){
-        ArrayList<Character> vars = new ArrayList<>(Arrays.asList('a', 'b'));
-        ArrayList<Float> vals = new ArrayList<>(Arrays.asList(.9f, .1f, .4f, .6f));
-        return new FactorTwo(vars, vals);
-    }
-    Factor new2Factor(List<Character> vars, List<Float> vals){
-        return new FactorTwo(vars, vals);
+//    Factor new1Factor(){
+//        ArrayList<Character> vars = new ArrayList<>(Collections.singletonList('a'));
+//        ArrayList<Float> vals = new ArrayList<>(Arrays.asList(.9f, .1f));
+//        return new FactorOne(vars, vals);
+//    }
+    Factor new1Factor(List<Character> vars, List<Float> vals, int size){
+        return new FactorOne(vars, vals,size);
     }
 
-    Factor new3Factor(){
-        ArrayList<Character> vars = new ArrayList<>(Arrays.asList('a', 'b', 'c'));
-        ArrayList<Float> vals = new ArrayList<>(Arrays.asList(.63f, .27f, .08f, .02f, .28f, .12f, .48f, .12f));
-        return new FactorThree(vars, vals);
-    }
-    Factor new3Factor(List<Character> vars, List<Float> vals){
-        return new FactorThree(vars, vals);
+//    Factor new2Factor(){
+//        ArrayList<Character> vars = new ArrayList<>(Arrays.asList('a', 'b'));
+//        ArrayList<Float> vals = new ArrayList<>(Arrays.asList(.9f, .1f, .4f, .6f));
+//        return new FactorTwo(vars, vals);
+//    }
+    Factor new2Factor(List<Character> vars, List<Float> vals, int size){
+        return new FactorTwo(vars, vals,size);
     }
 
-    Factor new4Factor(List<Character> vars, List<Float> vals){
-        return new FactorFour(vars, vals);
+//    Factor new3Factor(){
+//        ArrayList<Character> vars = new ArrayList<>(Arrays.asList('a', 'b', 'c'));
+//        ArrayList<Float> vals = new ArrayList<>(Arrays.asList(.63f, .27f, .08f, .02f, .28f, .12f, .48f, .12f));
+//        return new FactorThree(vars, vals);
+//    }
+    Factor new3Factor(List<Character> vars, List<Float> vals, int size){
+        return new FactorThree(vars, vals,size);
+    }
+
+    Factor new4Factor(List<Character> vars, List<Float> vals, int size){
+        return new FactorFour(vars, vals,size);
     }
 }
