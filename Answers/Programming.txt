@@ -1,0 +1,72 @@
+(Mr Smiles)
+	2) Mr Smiles has a prior probability of splashing of ~7.3%
+	Σ(NSV,FM,NA,MS) Pr(MW | NSV,FM,NA,MS) 
+	Σ(FM) Pr(FM) Σ(MS) Pr(MS) Σ(NSV) Pr(MW | NSV,FM,MS) Σ(NA) Pr(NSV | FM,NA) Pr(NA)
+	Σ(FM) Pr(FM) Σ(MS) Pr(MS) Σ(NSV) Pr(MW | NSV,FM,MS) F(NSV,FM)
+	Σ(FM) Pr(FM) Σ(MS) Pr(MS) F(MW,FM,MS)
+	Σ(FM) Pr(FM) F(MW,FM)
+	F(MW)
+
+	3) The chance that Mr Smiles is sick is ~8.6%
+	Pr(MS | MW,FM) = (Pr(MW | MS,FM) * Pr(MS)) / (Pr(MW | FM)) 
+				   = (F(MW | s,m) * Pr(S)) / (F(MW | m))
+	F(MW | m) = Σ(NSV,NA,MS) Pr(MW | NSV,m,NA,MS) 
+				Σ(MS) Pr(MS) Σ(NSV) Pr(MW | NSV,m,MS) Σ(NA) Pr(NSV | m,NA) Pr(NA)
+				Σ(MS) Pr(MS) Σ(NSV) Pr(MW | NSV,m,MS) F(NSV | m)
+				Σ(MS) Pr(MS) F(MW,MS | m)
+				F(MW | m)
+
+	F(MW | m,s) = Σ(NSV,NA) Pr(MW | NSV,m,NA,s) 
+				  Σ(NSV) Pr(MW | NSV,m,s) Σ(NA) Pr(NSV | m,NA) Pr(NA)
+				  Σ(NSV) Pr(MW | NSV,m,s) F(NSV | m)
+				  F(MW | m,s)
+
+	4) The chance that Mr Smiles is sick is now ~41.25%
+	Pr(MS | MW,FM,FB) = (Pr(MW,FB | MS,FM) * Pr(MS)) / (Pr(MW,FB | FM))
+					  = (Pr(MW | MS,FM) * Pr(FB | MS) * Pr(MS)) / (Pr(MW | FM) * Pr(FB)) 
+				   	  = (F(MW | s,m) * F(FB | s) * Pr(S)) / (F(MW | m) * F(FB))
+
+	F(FB) = Σ(MS) Pr(FB | MS) 
+			Σ(MS) Pr(FB | MS) Pr(MS)
+			F(FB)
+
+	F(FB | s) = Pr(FB | s) 
+				Pr(FB | s)
+				F(FB | s)
+
+	5) The chance that Mr Smiles is sick is now ~37.71%
+	Pr(MS | MW,FM,FB,NA) = (Pr(MW,FB | MS,FM,NA) * Pr(MS)) / (Pr(MW,FB | FM,NA))
+					  	 = (Pr(MW | MS,FM,NA) * Pr(FB | MS) * Pr(MS)) / (Pr(MW | FM,NA) * Pr(FB)) 
+				   	  	 = (F(MW | s,m,a) * F(FB | s) * Pr(S)) / (F(MW | m,a) * F(FB))
+
+	F(MW | m,a) = Σ(NSV,MS) Pr(MW | NSV,m,a,MS) 
+				  Σ(MS) Pr(MS) Σ(NSV) Pr(MW | NSV,m,MS) Pr(NSV | m,a)
+				  Σ(MS) Pr(MS) F(MW,MS | m,a)
+				  F(MW | m,a)
+
+	F(MW | s,m,a) = Σ(NSV) Pr(MW | NSV,m,a,s) 
+					Σ(NSV) Pr(MW | NSV,m,s) Pr(NSV | m,a)
+					F(MW | s,m,a)
+(Book)
+	1)
+	Quality:Team -> {0,1,2,3}
+	Outcome:Team - Team -> {lose,draw,win}
+
+	Quality(t) ~(.15,.23,.37,.25)
+	Outcome(t,t) ~CompCPT(Quality(t), Quality(t))
+
+	2) 	 A				 B				 C
+		| \			    / \ 			/ |
+	    |  \		   /   \		   /  |
+	    |	\		  /	    \		  /   |
+	    |	 \		 /		 \		 /	  |
+	    |	  \	    / 		  \	    /	  |
+	    |	   \   /		   \   /	  |
+	    |		\ /			    \ /	   	  |
+	    |		 X				 X		  |
+	    |		/ \			    / \ 	  |
+	    |	   /   \		   /   \	  |
+	    |	  /	    \		  /	    \  	  |
+	    |    /		 \		 / 	     \ 	  |
+	    V  |_		  _|   |_		  _|  V
+	   Match1		   Match2		  Match3

@@ -24,10 +24,11 @@ public class Bayes {
         Factor MW = ve.new4Factor(W,mw,2);
 //        System.out.println("hey");
         HashMap<Character,Integer> given = new HashMap<>();
-        Factor splash = ve.inference(Arrays.asList(FM,NA,MS,NSV,MW),'w',Arrays.asList('a','m','s','v'),given);
+        Factor splash = ve.inference(Arrays.asList(FM,NA,MS,NSV,MW),'w',Arrays.asList('a','v','s','m'),given);
 //        given.put('w',true);
         given.put('m',0);
-        System.out.println(splash.getVarValues('w',0).get(0));
+        float w = splash.getVarValues('w',0).get(0);
+        System.out.println(w);
         System.out.println();
 //        System.out.println(ve.restrict(FM,'m',true));d
         Factor splashWMoon = ve.inference(Arrays.asList(NA,MS,NSV,MW),'w',Arrays.asList('a','s','v'),given);
@@ -40,7 +41,9 @@ public class Bayes {
 //        System.out.println(splashIfSick);
         float wGivenS = splashIfSick.getVarValues('w',0).get(0);
         float sGivenW = (wGivenS*s)/wGivenM;
+//        float sGivenW2 = (wGivenS*s)/w;
         System.out.println(sGivenW);
+//        System.out.println(sGivenW2*wGivenM);
         System.out.println();
 
         HashMap<Character,Integer> given2 = new HashMap<>();
@@ -64,8 +67,5 @@ public class Bayes {
         float wGivenA = splashWAway.getVarValues('w',0).get(0);
         float sGivenBW2 = (bGivenS*s*wGivenS2)/(b*wGivenA);
         System.out.println(sGivenBW2);
-
-
-
     }
 }

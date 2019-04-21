@@ -1,0 +1,29 @@
+(a) A and B are independent because both paths have a collider variable on them. A>C<B is blocked on C and A>C>D<E<B is blocked on D.
+
+(b) A and B are not independent given D because knowing D unblocks the A>C>D<E<B path, and since D is a child of C, the A>C<B path is unblocked with the given evidence.
+
+(c) A and E are independent because of the colliders C and D. The path A>C<B>E is blocked by the ignorance of C, and A>C>D<E is blocked the same way on D.
+
+(d) A and E are not independent given C because knowing C opens the path A>C<B>E.
+
+(e) A and E are independent given B, as knowing B doesn't open any of colliders that orignally closed the paths when there was no evidence, and with C and D still ignored, both paths remain closed.
+
+(f) A and E are independent given B and C, because even though C is opening, B blocks the A>C<B>E path now, while the A>C>D<E path remains blocked on D.
+
+(g) A and E are not independent given D, as it opens both D, as the known variable, and C, since D is it's child. This unblocks both paths.
+
+(h) A and E are not independent given F, as it is a child of C, opening C and unblocking A>C<B>E.
+
+(i) F and H are not independent, as the two paths, F<C<B>E>D>H and F<C>D>H have no colliders and have no evidence to block on.
+
+(j) J and E are independent as G blocks both J>G<D<E and J>G<D<C<B>E.
+
+(k) J and E are not independent given G as it was the only variable keeping both paths closed. Knowing it opens both paths.
+
+(l) J and E are independent given A because A does not affect G, meaning both paths remain closed on G.
+
+(m) G and A are not independent as there is one open path A>C>D>G. The path A>C<B>E>D>G is blocked on C.
+
+(n) G and A are not independent given C because while it blocks A>C>D>G on C, it opens A>C<B>E>D>G.
+
+(o) G and A are independent given C and D because D recloses the second path that opens up when you learn C.
